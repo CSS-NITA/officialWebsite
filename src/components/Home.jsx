@@ -1,37 +1,32 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import backVideo from "../assets/home_page__video.mp4";
 import Carousel from "./UI/Carousel";
 import Loading from "./Loading";
 import homePic from "../assets/homepage_pic.png";
 import Gallery from "./UI/Gallery";
-import { motion} from "framer-motion";
+import { motion } from "framer-motion";
 
 function Home() {
   const bgImage =
     "https://images.unsplash.com/photo-1508615070457-7baeba4003ab?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-  // "https://images.pexels.com/photos/316466/pexels-photo-316466.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      const apikey = "8b41f8c7c2cfbb72fec5dffe42550d03";
       const url =
-        "https://current-affairs-api.p.rapidapi.com/current-affairs?country=in";
-      const options = {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key":
-            "7e56c256e2mshe9cf5df927f18aap15112ejsn58f3616cca84",
-          "X-RapidAPI-Host": "current-affairs-api.p.rapidapi.com",
-        },
-      };
+        "https://api.mediastack.com/v1/news?countries=in&languages=en&access_key=" +
+        apikey;
 
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(url);
         const result = await response.json();
-        const filteredValue = result.current_affairs.filter((item) => {
-          return item.author && item.urlToImage;
+        // console.log("result: ", result);
+        const filteredValue = result.data.filter((item) => {
+          if (item.image) return item;
         });
-        console.log(filteredValue);
+        // console.log("filtered: ", filteredValue);
         setData(filteredValue);
       } catch (error) {
         console.error(error);
@@ -67,14 +62,30 @@ function Home() {
         <div className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-br from-black via-transparent to-transparent opacity-80"></div>
         <div className="absolute bottom-0 right-0 h-full w-full bg-gradient-to-bl from-black via-transparent to-transparent opacity-80"></div>
 
-        <motion.div initial={{opacity:0,y:60}} animate={{opacity:1,y:0}} transition={{ duration: 0.7 }}
-        className="hero-overlay z-20 m-4 bg-opacity-60 text-center text-2xl font-medium tracking-wide ">
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="hero-overlay z-20 m-4 bg-opacity-60 text-center text-2xl font-medium tracking-wide "
+        >
           A NITA Club
         </motion.div>
         <div className="hero-content text-neutral-content z-20 text-center">
           <div className="mx-auto my-auto max-w-lg ">
-            <motion.h1 initial={{opacity:0,y:60}} animate={{opacity:1,y:0}} transition={{ duration: 0.7 }} className="mb-5 text-5xl font-bold">Civil Services Society</motion.h1>
-            <motion.p initial={{opacity:0,y:60}} animate={{opacity:1,y:0}} transition={{ duration: 0.7,delay:0.5 }} className="mb-5 px-4">
+            <motion.h1
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="mb-5 text-5xl font-bold"
+            >
+              Civil Services Society
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="mb-5 px-4"
+            >
               Ready to embark on your journey to becoming a future leader? Take
               the first step and join the CSS today!
             </motion.p>
@@ -82,11 +93,26 @@ function Home() {
         </div>
       </div>
 
-      <div className="flex w-full flex-col items-center justify-center px-8 py-16 text-center text-white sm:p-24"
+      <div
+        className="flex w-full flex-col items-center justify-center px-8 py-16 text-center text-white sm:p-24"
         style={{ background: "#000" }}
       >
-        <motion.h4 initial={{opacity:0, y:"-50%"}} whileInView={{opacity:1,y:0}} transition={{duration:0.8}} viewport={{once:true}} className="text-3xl font-bold sm:text-5xl">#OurMotto</motion.h4>
-        <motion.p initial={{opacity:0, y:"50%"}} whileInView={{opacity:1,y:0}} transition={{duration:0.8}} viewport={{once:true}} className="container pt-3 text-justify font-inter text-sm sm:pt-6 sm:text-lg sm:leading-7 lg:w-3/4">
+        <motion.h4
+          initial={{ opacity: 0, y: "-50%" }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold sm:text-5xl"
+        >
+          #OurMotto
+        </motion.h4>
+        <motion.p
+          initial={{ opacity: 0, y: "50%" }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="container pt-3 text-justify font-inter text-sm sm:pt-6 sm:text-lg sm:leading-7 lg:w-3/4"
+        >
           The CSS Club is dedicated to supporting civil service aspirants by
           offering a platform for engaging discussions and seeking advice on
           various subjects related to civil examinations. Our mission includes
